@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="darkreader-lock">
+<title>Casa Migas — Panadería de barrio</title>
+<meta name="description" content="Casa Migas es una panadería de barrio: masa madre, hornadas pequeñas cada día y encargos por WhatsApp. Web de demostración.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Casa Migas — Panadería de barrio">
+<meta property="og:description" content="Casa Migas es una panadería de barrio: masa madre, hornadas pequeñas cada día y encargos por WhatsApp. Web de demostración.">
+<meta name="theme-color" content="#FFF8EC">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23F6B9C2'/><ellipse cx='16' cy='18' rx='11' ry='8' fill='%23E7A863'/><ellipse cx='16' cy='15.5' rx='8.5' ry='4.5' fill='%23F2C48A'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ───────── Tokens ───────── */
+:root{
+  color-scheme:light dark; /* paleta propia fija: el navegador no debe invertirla */
+  --cream:#FFF8EC;
+  --white:#FFFDF8;
+  --butter:#FFEDB5;
+  --peach:#FFD9BD;
+  --blush:#FAD3D8;
+  --pistachio:#DDE8C6;
+  --cocoa:#5B3A2E;
+  --cocoa-soft:#7E5848;
+  --crust:#E7A863;
+
+  --display:"Caprasimo","Georgia",serif;
+  --body:"Nunito",system-ui,sans-serif;
+  --hand:"Caveat","Comic Sans MS",cursive;
+
+  --gut:clamp(1.25rem,5vw,3rem);
+  --r:22px;
+}
+
+/* ───────── Base ───────── */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1rem;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--cream);color:var(--cocoa);
+  font:400 1.0625rem/1.65 var(--body);-webkit-font-smoothing:antialiased;
+}
+svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cocoa);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:1rem;top:-5rem;z-index:100;background:var(--cocoa);color:var(--cream);padding:.7rem 1.1rem;border-radius:999px;font-weight:700}
+.skip:focus{top:1rem}
+.wrap{max-width:1080px;margin-inline:auto}
+.hand{font-family:var(--hand);font-weight:700}
+
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(2rem,5vw,3.2rem)}
+
+/* Misma paleta en modo oscuro: el diseño es de colores fijos. */
+@media (prefers-color-scheme:dark){
+  :root{color-scheme:light dark}
+}
+::placeholder{color:#8a6a5c;opacity:1}
+
+/* ───────── Botones ───────── */
+.btn{
+  display:inline-block;text-decoration:none;cursor:pointer;text-align:center;
+  font:800 1rem/1 var(--body);padding:1rem 1.6rem;border-radius:999px;border:2.5px solid var(--cocoa);
+  transition:transform .18s ease,box-shadow .18s ease,background .18s,color .18s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 5px 0 rgba(91,58,46,.22)}
+.btn:active{transform:none;box-shadow:none}
+.btn--solid{background:var(--cocoa);color:var(--cream)}
+.btn--line{background:transparent;color:var(--cocoa)}
+.btn--line:hover{background:var(--white)}
+
+/* ───────── Toldo (firma de la página) ───────── */
+.awning{
+  height:84px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='112' height='84' viewBox='0 0 112 84'><rect width='56' height='56' fill='%23F6B9C2'/><circle cx='28' cy='56' r='28' fill='%23F6B9C2'/><rect x='56' width='56' height='56' fill='%23FFFDF8'/><circle cx='84' cy='56' r='28' fill='%23FFFDF8'/></svg>") repeat-x center top / 112px 84px;
+  filter:drop-shadow(0 7px 0 rgba(91,58,46,.1));
+  position:relative;z-index:2;
+  transform-origin:top center;animation:settle 1.4s cubic-bezier(.3,1.6,.5,1) both;
+}
+@keyframes settle{from{transform:perspective(600px) rotateX(-14deg)}to{transform:none}}
+
+/* ───────── Cabecera ───────── */
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem 2rem;flex-wrap:wrap;padding:1.6rem var(--gut) 0}
+.logo{font:400 clamp(1.8rem,4vw,2.3rem)/1 var(--display);text-decoration:none}
+.logo small{display:block;margin-top:.25rem;font:700 1.15rem/1 var(--hand);color:var(--cocoa-soft)}
+.nav{display:flex;gap:.4rem 1.6rem;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.nav a{font-weight:700;text-decoration:none;padding:.3rem 0;border-bottom:2.5px solid transparent;transition:border-color .15s}
+.nav a:hover{border-color:var(--crust)}
+
+/* ───────── Secciones ───────── */
+.sec{position:relative;padding:clamp(4.5rem,9vw,7rem) var(--gut)}
+.sec--blush{background:var(--blush);--sec:var(--blush)}
+.sec--peach{background:var(--peach);--sec:var(--peach)}
+.sec--cocoa{background:var(--cocoa);color:var(--cream);--sec:var(--cocoa)}
+.sec--blush::before,.sec--peach::before,.sec--cocoa::before{ /* borde de puntilla */
+  content:"";position:absolute;left:0;right:0;top:-19px;height:20px;
+  background:radial-gradient(circle at 20px 20px,var(--sec) 19.5px,transparent 20.5px) 0 0 / 40px 20px repeat-x;
+}
+.sec--flow{padding-top:clamp(1rem,3vw,2rem)}
+.head{text-align:center;margin-bottom:clamp(2rem,5vw,3.2rem)}
+.head p{margin:.8rem auto 0;max-width:46ch}
+.note{font:700 1.5rem/1.1 var(--hand);color:var(--cocoa-soft);margin:0 0 .4rem}
+
+/* ───────── Hero ───────── */
+.hero{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:2.5rem clamp(2rem,6vw,5rem);align-items:center;
+  padding:clamp(2.5rem,6vw,5rem) var(--gut) clamp(4rem,8vw,6.5rem);
+}
+.hero h1{font-size:clamp(2.9rem,5.6vw,4.7rem);line-height:1.04;margin:.2rem 0 1.3rem}
+.hero__lede{font-size:clamp(1.1rem,2vw,1.3rem);max-width:34ch;margin:0 0 2rem}
+.hero__cta{display:flex;gap:.9rem;flex-wrap:wrap}
+.open{
+  display:inline-flex;align-items:center;gap:.6rem;margin:1.6rem 0 0;padding:.45rem 1.1rem;
+  background:var(--white);border-radius:999px;font-weight:700;font-size:.95rem;
+}
+.open::before{content:"";width:.7rem;height:.7rem;border-radius:50%;background:#7FA568;flex:none}
+.open.is-closed::before{background:#D9857A}
+
+.arch{
+  position:relative;width:min(100%,440px);aspect-ratio:11 / 9.6;margin-inline:auto;
+  background:var(--peach);border-radius:999px 999px 30px 30px;overflow:hidden;
+}
+.arch::after{
+  content:"";position:absolute;inset:14px;pointer-events:none;
+  border:2.5px dashed rgba(91,58,46,.2);border-radius:999px 999px 20px 20px;
+}
+.arch svg{position:absolute;left:0;right:0;bottom:0;width:100%}
+.steam{fill:none;stroke:#D9A58A;stroke-width:6;stroke-linecap:round;opacity:0;animation:steam 4.2s ease-in-out infinite}
+.steam--2{animation-delay:1.4s}
+.steam--3{animation-delay:2.8s}
+@keyframes steam{
+  0%{opacity:0;transform:translateY(14px)}
+  30%{opacity:.9}
+  100%{opacity:0;transform:translateY(-18px)}
+}
+
+/* ───────── Carta ───────── */
+.menu{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+.item{
+  position:relative;display:flex;flex-direction:column;border-radius:var(--r);padding:1.6rem 1.4rem 1.5rem;
+  background:var(--c,var(--butter));transition:transform .25s cubic-bezier(.3,1.5,.5,1);
+}
+.item:nth-child(4n+1){--c:var(--butter)}
+.item:nth-child(4n+2){--c:var(--blush)}
+.item:nth-child(4n+3){--c:var(--peach)}
+.item:nth-child(4n){--c:var(--pistachio)}
+.item:hover{transform:translateY(-6px) rotate(-1deg)}
+.item:nth-child(even):hover{transform:translateY(-6px) rotate(1deg)}
+.item svg{width:128px;height:107px;margin-bottom:1rem}
+.item h3{font-size:1.45rem;margin-bottom:.5rem}
+.item p{margin:0 0 1.2rem;flex:1}
+.price{
+  align-self:flex-start;font:700 1.55rem/1 var(--hand);padding:.3rem .9rem .25rem;background:var(--white);
+  border-radius:999px 12px 12px 999px;transform:rotate(-2deg);
+}
+
+/* ───────── Quiénes somos ───────── */
+.story{text-align:center;max-width:720px;margin-inline:auto}
+.story blockquote{margin:0 0 1.2rem;font:700 clamp(2rem,5vw,3.2rem)/1.15 var(--hand)}
+.story cite{display:block;font:600 1rem var(--body);font-style:normal;margin-bottom:2rem}
+.story p{margin:0 auto;max-width:54ch;font-size:1.15rem}
+
+/* ───────── Encargos ───────── */
+.order-wa{display:flex;justify-content:center;margin-bottom:1.6rem}
+.order{
+  max-width:640px;margin-inline:auto;background:var(--white);border-radius:30px;
+  padding:clamp(1.5rem,4vw,2.5rem);display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;
+}
+.order__or{max-width:640px;margin:0 auto 1.1rem;text-align:center}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field--full{grid-column:1 / -1}
+.field label{font-weight:800;font-size:.95rem}
+.field input,.field textarea{
+  width:100%;font:600 1rem var(--body);color:var(--cocoa);
+  background:var(--cream);border:2.5px solid rgba(91,58,46,.28);border-radius:16px;padding:.8rem 1rem;
+  transition:border-color .15s,box-shadow .15s;
+}
+.field textarea{min-height:6.5rem;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--cocoa);box-shadow:0 0 0 4px rgba(231,168,99,.45)}
+.field input:user-invalid,.field textarea:user-invalid{border-color:#b5453d}
+.order__send{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.order__ok{grid-column:1 / -1;margin:0;padding:1rem 1.2rem;border-radius:16px;background:var(--pistachio);font-weight:700}
+.order__ok[hidden]{display:none}
+
+/* ───────── Visítanos ───────── */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:2rem clamp(2rem,6vw,5rem);align-items:start;max-width:760px;margin-inline:auto}
+.visit h3{font-size:1.6rem;margin-bottom:.8rem}
+.visit address{font-style:normal}
+.hours{margin:0;padding:0;list-style:none}
+.hours li{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:2px dotted rgba(91,58,46,.35)}
+.hours li:last-child{border-bottom:0}
+.visit .hand{font-size:1.5rem;line-height:1.2;margin-top:1rem;display:block;color:var(--cocoa-soft)}
+
+/* ───────── Pie ───────── */
+.foot{padding:clamp(3rem,6vw,4.5rem) var(--gut) 2rem;text-align:center}
+.foot .logo{display:inline-block;color:var(--cream)}
+.foot p{margin:.8rem auto 0;max-width:46ch;opacity:.9}
+.foot__demo{font-size:.9rem;opacity:.75!important;margin-top:1.8rem!important}
+
+/* ───────── Revelado suave ───────── */
+.js .reveal{opacity:0;translate:0 22px;transition:opacity .7s ease,translate .7s ease}
+.js .reveal.in{opacity:1;translate:0 0}
+
+/* ───────── Responsive ───────── */
+@media (max-width:980px){
+  .menu{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero__lede{margin-inline:auto}
+  .hero__cta{justify-content:center}
+  .visit{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .awning{height:63px;background-size:84px 63px}
+  .top{justify-content:center;text-align:center}
+  .nav{justify-content:center}
+  .menu{grid-template-columns:1fr}
+  .order{grid-template-columns:1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .steam{opacity:.7}
+  .js .reveal{opacity:1;translate:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<div class="awning" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="logo" href="#inicio" aria-label="Casa Migas, inicio">Casa Migas<small>panadería de barrio</small></a>
+  <nav aria-label="Principal">
+    <ul class="nav">
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#encargos">Encargos</a></li>
+      <li><a href="#visitanos">Visítanos</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ═════ HERO ═════ -->
+  <section class="hero wrap" id="inicio">
+    <div>
+      <p class="note">Panadería nueva en la calle del Horno</p>
+      <h1>Pan tibio y la puerta abierta.</h1>
+      <p class="hero__lede">Masa madre, harina de molino de aquí al lado y hornadas pequeñas cada día. Pasa, que huele de maravilla.</p>
+      <div class="hero__cta">
+        <a class="btn btn--solid" href="#carta">Ver la carta</a>
+        <a class="btn btn--line" href="https://wa.me/34000000000?text=Hola%2C%20quiero%20hacer%20un%20encargo" target="_blank" rel="noopener">Encargar por WhatsApp</a>
+      </div>
+      <p class="open" id="open">Horario: martes a domingo, 7:30 – 20:00</p>
+    </div>
+
+    <div class="arch">
+      <svg viewBox="0 0 440 340" role="img" aria-label="Una hogaza, una barra y dos bollos sobre una tabla de madera, con vapor encima">
+        <circle cx="220" cy="120" r="104" fill="#FFEDB5"/>
+        <!-- tabla -->
+        <rect x="14" y="270" width="412" height="70" rx="0" fill="#E2B58A"/>
+        <rect x="14" y="270" width="412" height="14" fill="#EBC59E"/>
+        <!-- barra larga -->
+        <g transform="rotate(-7 290 200)">
+          <rect x="170" y="150" width="236" height="104" rx="52" fill="#E7A863"/>
+          <rect x="182" y="156" width="212" height="58" rx="29" fill="#F2C48A"/>
+          <path d="M214 172l22 26M262 168l22 26M310 164l22 26M358 162l16 20" stroke="#FFF1D6" stroke-width="8" stroke-linecap="round"/>
+        </g>
+        <!-- hogaza -->
+        <ellipse cx="150" cy="216" rx="106" ry="68" fill="#E7A863"/>
+        <ellipse cx="150" cy="192" rx="88" ry="46" fill="#F2C48A"/>
+        <path d="M96 182c14 12 20 26 18 44M144 170c12 14 16 32 12 52M194 180c-4 14-12 28-24 38" fill="none" stroke="#FFF1D6" stroke-width="9" stroke-linecap="round"/>
+        <g fill="#FFF8EC" opacity=".75"><circle cx="110" cy="164" r="3"/><circle cx="178" cy="156" r="2.5"/><circle cx="214" cy="190" r="3"/><circle cx="84" cy="208" r="2.5"/><circle cx="160" cy="236" r="2"/></g>
+        <!-- bollos -->
+        <circle cx="332" cy="244" r="44" fill="#E7A863"/>
+        <ellipse cx="332" cy="230" rx="34" ry="24" fill="#F2C48A"/>
+        <path d="M312 226q20 12 40 0" fill="none" stroke="#FFF1D6" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="398" cy="256" r="32" fill="#E7A863"/>
+        <ellipse cx="398" cy="246" rx="24" ry="17" fill="#F2C48A"/>
+        <path d="M384 242q14 9 28 0" fill="none" stroke="#FFF1D6" stroke-width="5" stroke-linecap="round"/>
+        <!-- vapor -->
+        <path class="steam" d="M118 110c-12-14 12-24 0-40"/>
+        <path class="steam steam--2" d="M164 100c-12-14 12-24 0-40"/>
+        <path class="steam steam--3" d="M210 112c-12-14 12-24 0-40"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═════ CARTA ═════ -->
+  <section class="sec sec--flow" id="carta" aria-labelledby="t-carta">
+    <div class="wrap">
+    <div class="head reveal">
+      <p class="note">hecho a mano, todos los días</p>
+      <h2 id="t-carta">Lo que no puede faltar</h2>
+    </div>
+
+    <ul class="menu">
+      <li class="item reveal">
+        <svg viewBox="0 0 120 100" aria-hidden="true">
+          <ellipse cx="60" cy="88" rx="40" ry="6" fill="#5B3A2E" opacity=".1"/>
+          <path d="M14 68c0-28 21-48 46-48s46 20 46 48c0 12-13 18-46 18S14 80 14 68z" fill="#E7A863"/>
+          <path d="M22 60c4-20 20-32 38-32s34 12 38 32c-8-8-20-12-38-12s-30 4-38 12z" fill="#F2C48A"/>
+          <path d="M42 44c4 8 6 14 6 22M60 40c3 8 4 16 4 26M78 44c-3 8-5 14-5 22" stroke="#FFF1D6" stroke-width="5" stroke-linecap="round" fill="none"/>
+        </svg>
+        <h3>Hogaza de masa madre</h3>
+        <p>Veinticuatro horas de fermentación, corteza crujiente y una miga que aguanta la sopa.</p>
+        <span class="price">00 €</span>
+      </li>
+      <li class="item reveal">
+        <svg viewBox="0 0 120 100" aria-hidden="true">
+          <ellipse cx="60" cy="88" rx="44" ry="6" fill="#5B3A2E" opacity=".1"/>
+          <ellipse cx="20" cy="66" rx="13" ry="10" transform="rotate(-50 20 66)" fill="#E7A863"/>
+          <ellipse cx="100" cy="66" rx="13" ry="10" transform="rotate(50 100 66)" fill="#E7A863"/>
+          <ellipse cx="36" cy="56" rx="19" ry="14" transform="rotate(-25 36 56)" fill="#EBB373"/>
+          <ellipse cx="84" cy="56" rx="19" ry="14" transform="rotate(25 84 56)" fill="#EBB373"/>
+          <ellipse cx="60" cy="48" rx="26" ry="20" fill="#F2C48A"/>
+          <path d="M44 34q-4 14 0 28M60 30v36M76 34q4 14 0 28" fill="none" stroke="#D99452" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <h3>Croissant de mantequilla</h3>
+        <p>Laminado a mano, con tiempo y con mucha mantequilla. Se deshace en capas.</p>
+        <span class="price">00 €</span>
+      </li>
+      <li class="item reveal">
+        <svg viewBox="0 0 120 100" aria-hidden="true">
+          <ellipse cx="60" cy="88" rx="40" ry="6" fill="#5B3A2E" opacity=".1"/>
+          <clipPath id="clip-rollo"><circle cx="60" cy="50" r="38"/></clipPath>
+          <circle cx="60" cy="50" r="38" fill="#EBB57C"/>
+          <path d="M60 50a5 5 0 0 1 10 0a10 10 0 0 1-20 0a15 15 0 0 1 30 0a20 20 0 0 1-40 0a25 25 0 0 1 50 0" fill="none" stroke="#C48350" stroke-width="4" stroke-linecap="round"/>
+          <g clip-path="url(#clip-rollo)" fill="none" stroke="#FFF6EA" stroke-width="6" stroke-linecap="round">
+            <path d="M16 34q11-9 22 0t22 0t22 0t22 0"/>
+            <path d="M16 56q11-9 22 0t22 0t22 0t22 0"/>
+            <path d="M16 76q11-9 22 0t22 0t22 0t22 0"/>
+          </g>
+        </svg>
+        <h3>Rollo de canela</h3>
+        <p>Tibio, pegajoso y con glaseado de queso crema. El del domingo por la mañana.</p>
+        <span class="price">00 €</span>
+      </li>
+      <li class="item reveal">
+        <svg viewBox="0 0 120 100" aria-hidden="true">
+          <ellipse cx="60" cy="90" rx="38" ry="5" fill="#5B3A2E" opacity=".1"/>
+          <circle cx="60" cy="48" r="38" fill="#E5B070"/>
+          <circle cx="60" cy="46" r="32" fill="#F0C58C"/>
+          <g fill="#7A4B3A"><rect x="38" y="30" width="11" height="8" rx="3" transform="rotate(-20 43 34)"/><rect x="66" y="26" width="11" height="8" rx="3" transform="rotate(15 71 30)"/><rect x="52" y="48" width="11" height="8" rx="3" transform="rotate(30 57 52)"/><rect x="34" y="56" width="10" height="7" rx="3" transform="rotate(10 39 59)"/><rect x="72" y="50" width="11" height="8" rx="3" transform="rotate(-25 77 54)"/><rect x="56" y="66" width="10" height="7" rx="3" transform="rotate(-10 61 69)"/></g>
+        </svg>
+        <h3>Galleta de chocolate</h3>
+        <p>Grande, blandita por dentro y con chocolate negro a trozos. Cuidado que engancha.</p>
+        <span class="price">00 €</span>
+      </li>
+    </ul>
+    </div>
+  </section>
+
+  <!-- ═════ QUIÉNES SOMOS ═════ -->
+  <section class="sec sec--blush" aria-labelledby="t-quienes">
+    <div class="story reveal">
+      <h2 id="t-quienes" class="note" style="font-size:1.5rem">Quiénes somos</h2>
+      <blockquote>“Aquí el pan no corre. Fermenta, descansa y sale cuando está listo.”</blockquote>
+      <cite>Rosa, la panadera</cite>
+      <p>Abrimos hace unos meses con un horno pequeño y una masa madre que cuidamos como a una mascota. Hacemos poco, pero muchas veces al día, para que lo que te llevas esté siempre recién hecho.</p>
+    </div>
+  </section>
+
+  <!-- ═════ ENCARGOS ═════ -->
+  <section class="sec sec--peach" id="encargos" aria-labelledby="t-encargos">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="note">para el finde, o para cuando vengan</p>
+        <h2 id="t-encargos">Encarga y recoge</h2>
+        <p>Dinos qué quieres y para cuándo, y lo tienes preparado en el mostrador. Para tartas y pedidos grandes, mejor con tres días.</p>
+      </div>
+
+      <div class="order-wa reveal">
+        <a class="btn btn--solid" href="https://wa.me/34000000000?text=Hola%2C%20quiero%20hacer%20un%20encargo" target="_blank" rel="noopener">Encargar por WhatsApp</a>
+      </div>
+      <p class="order__or hand reveal" style="font-size:1.4rem">o déjanos tus datos y te llamamos</p>
+
+      <form class="order reveal" id="order" novalidate>
+        <div class="field">
+          <label for="nombre">Tu nombre</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="tel">Teléfono</label>
+          <input id="tel" name="tel" type="tel" autocomplete="tel" required>
+        </div>
+        <div class="field field--full">
+          <label for="detalle">Qué te apetece y para cuándo</label>
+          <textarea id="detalle" name="detalle" placeholder="Dos hogazas y seis croissants para el sábado por la mañana, por ejemplo." required></textarea>
+        </div>
+        <div class="order__send field--full">
+          <button class="btn btn--solid" type="submit">Hacer el encargo</button>
+        </div>
+        <p class="order__ok" id="order-ok" role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═════ VISÍTANOS ═════ -->
+  <section class="sec" id="visitanos" aria-labelledby="t-visita">
+    <div class="wrap">
+    <div class="head reveal">
+      <p class="note">hay un banco en la puerta</p>
+      <h2 id="t-visita">Visítanos</h2>
+    </div>
+
+    <div class="visit reveal">
+      <div>
+        <h3>Dónde estamos</h3>
+        <address>
+          Calle del Horno, 12<br>
+          50003 Zaragoza<br>
+          <a href="tel:+34976000000">976 00 00 00</a><br>
+          <a href="mailto:hola@casamigas.demo">hola@casamigas.demo</a>
+        </address>
+        <span class="hand">Si huele a pan caliente, estás en el sitio.</span>
+      </div>
+      <div>
+        <h3>Horario</h3>
+        <ul class="hours">
+          <li><span>Martes a domingo</span><span>7:30 – 20:00</span></li>
+          <li><span>Lunes</span><span>Descansamos</span></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+</main>
+
+<footer class="sec sec--cocoa foot">
+  <a class="logo" href="#inicio">Casa Migas</a>
+  <p>Pan, bollos y un buen día. Gracias por pasar.</p>
+  <p class="foot__demo">Web de demostración · Proyecto de portafolio</p>
+</footer>
+
+<script>
+(() => {
+  document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Revelado suave al hacer scroll ── */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── "Abierto ahora" según la hora real (martes a domingo, 7:30 – 20:00) ── */
+  const openEl = document.getElementById('open');
+  function updateOpen() {
+    const now = new Date();
+    const day = now.getDay();               // 0 domingo … 1 lunes … 6 sábado
+    const min = now.getHours() * 60 + now.getMinutes();
+    const OPEN = 7 * 60 + 30, CLOSE = 20 * 60;
+    let txt, closed = true;
+    if (day !== 1 && min >= OPEN && min < CLOSE) { txt = 'Abierto ahora · hasta las 20:00'; closed = false; }
+    else if (day === 1) txt = 'Hoy lunes descansamos · abrimos mañana a las 7:30';
+    else if (min < OPEN) txt = 'Cerrado ahora · abrimos hoy a las 7:30';
+    else txt = day === 0 ? 'Cerrado ahora · abrimos el martes a las 7:30' : 'Cerrado ahora · abrimos mañana a las 7:30';
+    openEl.textContent = txt;
+    openEl.classList.toggle('is-closed', closed);
+  }
+  updateOpen();
+  setInterval(updateOpen, 60000);
+
+  /* ── Encargos: confirmación sin backend ── */
+  const form = document.getElementById('order');
+  const ok = document.getElementById('order-ok');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    ok.textContent = `Gracias, ${form.nombre.value.trim().split(' ')[0]}. Anotado. Te llamamos al ${form.tel.value.trim()} para confirmarlo. (Demo: no se ha enviado nada.)`;
+    ok.hidden = false;
+    form.reset();
+    ok.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+</body>
+</html>
